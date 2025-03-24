@@ -28,3 +28,7 @@ npm run start
 
 
 ## State Management:  Redux
+### Installation
+```
+npm i redux @reduxjs/toolkit 
+```
