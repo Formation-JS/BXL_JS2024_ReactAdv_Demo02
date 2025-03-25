@@ -31,4 +31,5 @@ npm run start
 ### Installation
 ```
 npm i redux @reduxjs/toolkit 
+npm i react-redux
 ```
