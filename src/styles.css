@@ -13,3 +13,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+input {
+  @apply
+  border-2 pl-1 rounded
+}
+
+/* label {
+  @apply
+  after:content-[':'] mr-1
+} */
+
+label::after {
+  content: ':';
+  margin-left: 0.5ch;
+  margin-right: 0.5ch;
+}
+
+button {
+  @apply
+  bg-pink-400 rounded-2xl px-4 py-1.5 text-amber-200 font-semibold 
+}
