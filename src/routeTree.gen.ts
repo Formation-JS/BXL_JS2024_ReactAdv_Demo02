@@ -15,6 +15,7 @@ import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as demoDemoImport } from './routes/(demo)/demo'
 import { Route as demoDemoIndexImport } from './routes/(demo)/demo/index'
+import { Route as demoDemoRequestImport } from './routes/(demo)/demo/request'
 import { Route as demoDemoIntroImport } from './routes/(demo)/demo/intro'
 import { Route as demoDemoIdIndexImport } from './routes/(demo)/demo/$id/index'
 
@@ -41,6 +42,12 @@ const demoDemoRoute = demoDemoImport.update({
 const demoDemoIndexRoute = demoDemoIndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => demoDemoRoute,
+} as any)
+
+const demoDemoRequestRoute = demoDemoRequestImport.update({
+  id: '/request',
+  path: '/request',
   getParentRoute: () => demoDemoRoute,
 } as any)
 
@@ -88,6 +95,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof demoDemoIntroImport
       parentRoute: typeof demoDemoImport
     }
+    '/(demo)/demo/request': {
+      id: '/(demo)/demo/request'
+      path: '/request'
+      fullPath: '/demo/request'
+      preLoaderRoute: typeof demoDemoRequestImport
+      parentRoute: typeof demoDemoImport
+    }
     '/(demo)/demo/': {
       id: '/(demo)/demo/'
       path: '/'
@@ -109,12 +123,14 @@ declare module '@tanstack/react-router' {
 
 interface demoDemoRouteChildren {
   demoDemoIntroRoute: typeof demoDemoIntroRoute
+  demoDemoRequestRoute: typeof demoDemoRequestRoute
   demoDemoIndexRoute: typeof demoDemoIndexRoute
   demoDemoIdIndexRoute: typeof demoDemoIdIndexRoute
 }
 
 const demoDemoRouteChildren: demoDemoRouteChildren = {
   demoDemoIntroRoute: demoDemoIntroRoute,
+  demoDemoRequestRoute: demoDemoRequestRoute,
   demoDemoIndexRoute: demoDemoIndexRoute,
   demoDemoIdIndexRoute: demoDemoIdIndexRoute,
 }
@@ -128,6 +144,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/demo': typeof demoDemoRouteWithChildren
   '/demo/intro': typeof demoDemoIntroRoute
+  '/demo/request': typeof demoDemoRequestRoute
   '/demo/': typeof demoDemoIndexRoute
   '/demo/$id': typeof demoDemoIdIndexRoute
 }
@@ -136,6 +153,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/demo/intro': typeof demoDemoIntroRoute
+  '/demo/request': typeof demoDemoRequestRoute
   '/demo': typeof demoDemoIndexRoute
   '/demo/$id': typeof demoDemoIdIndexRoute
 }
@@ -146,21 +164,30 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/(demo)/demo': typeof demoDemoRouteWithChildren
   '/(demo)/demo/intro': typeof demoDemoIntroRoute
+  '/(demo)/demo/request': typeof demoDemoRequestRoute
   '/(demo)/demo/': typeof demoDemoIndexRoute
   '/(demo)/demo/$id/': typeof demoDemoIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/demo' | '/demo/intro' | '/demo/' | '/demo/$id'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/demo'
+    | '/demo/intro'
+    | '/demo/request'
+    | '/demo/'
+    | '/demo/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/demo/intro' | '/demo' | '/demo/$id'
+  to: '/' | '/about' | '/demo/intro' | '/demo/request' | '/demo' | '/demo/$id'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/(demo)/demo'
     | '/(demo)/demo/intro'
+    | '/(demo)/demo/request'
     | '/(demo)/demo/'
     | '/(demo)/demo/$id/'
   fileRoutesById: FileRoutesById
@@ -203,12 +230,17 @@ export const routeTree = rootRoute
       "filePath": "(demo)/demo.tsx",
       "children": [
         "/(demo)/demo/intro",
+        "/(demo)/demo/request",
         "/(demo)/demo/",
         "/(demo)/demo/$id/"
       ]
     },
     "/(demo)/demo/intro": {
       "filePath": "(demo)/demo/intro.tsx",
+      "parent": "/(demo)/demo"
+    },
+    "/(demo)/demo/request": {
+      "filePath": "(demo)/demo/request.tsx",
       "parent": "/(demo)/demo"
     },
     "/(demo)/demo/": {

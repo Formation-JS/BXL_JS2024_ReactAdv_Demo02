@@ -1,6 +1,8 @@
 import { nanoid } from 'nanoid';
-import { createAction } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk } from "@reduxjs/toolkit";
 import type { Plant, PlantData } from "../../@types/plant";
+import fetchPlantSpecies from '../../services/plant.service.ts';
+import type { RootState } from '../store.ts';
 
 //! Action Creators
 //! Ce sont des méthodes pour générer un objet "Action" -> { type:'', payload:... }
@@ -30,3 +32,18 @@ export const plantMoveOut = createAction<string>('plant/move-out');
 export const plantMoveIn = createAction<string>('plant/move-in');
 
 export const plantRemoveAll = createAction('plant/burn-all');
+
+export const plantSpeciesFetch = createAsyncThunk(
+    'plant/fetch-species',
+    async (name: string) => {
+
+        await new Promise((resolve) => setTimeout(resolve, 1_000));
+        return await fetchPlantSpecies(name);
+    },
+    {
+        condition: (name: string, { getState }) => {
+            const state = getState() as RootState;
+            return !state.plant.search.isLoading;
+        }
+    }
+);
