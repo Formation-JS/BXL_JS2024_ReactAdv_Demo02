@@ -29,3 +29,4 @@ export const plantMoveOut = createAction<string>('plant/move-out');
 
 export const plantMoveIn = createAction<string>('plant/move-in');
 
+export const plantRemoveAll = createAction('plant/burn-all');

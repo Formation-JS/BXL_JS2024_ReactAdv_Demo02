@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { plantAdd, plantMoveIn, plantMoveOut, plantRemove } from "./plant.action.ts";
+import { plantAdd, plantMoveIn, plantMoveOut, plantRemove, plantRemoveAll } from "./plant.action.ts";
 import type { Plant } from "../../@types/plant";
 
 //! Reducer
@@ -48,7 +48,12 @@ const plantReducer = createReducer<PlantStateReducer>(initialState, (builder) =>
             if(plant) {
                 plant.isGiven = false;
             }
-        });
+        })
+        .addCase(plantRemoveAll, (state) => {
+
+            state.plants = [];
+            state.count = 0;
+        })
 });
 
 export default plantReducer;
